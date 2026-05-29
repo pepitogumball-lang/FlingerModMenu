@@ -14,14 +14,43 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Assembly-CSharp parcheado: contiene namespace Modding (Mod, ModHooks, IMod, etc.) -->
     <Reference Include="Assembly-CSharp">
       <HintPath>lib\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ModdingAPI">
-      <HintPath>lib\ModdingAPI.dll</HintPath>
+
+    <!-- Hooks de MonoMod: equivalente moderno de ModdingAPI.dll -->
+    <Reference Include="MMHOOK_Assembly-CSharp">
+      <HintPath>lib\MMHOOK_Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+
+    <!-- Hooks de PlayMaker -->
+    <Reference Include="MMHOOK_PlayMaker">
+      <HintPath>lib\MMHOOK_PlayMaker.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <!-- Dependencias de MonoMod -->
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>lib\MonoMod.RuntimeDetour.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MonoMod.Utils">
+      <HintPath>lib\MonoMod.Utils.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>lib\Mono.Cecil.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <!-- DLLs de Unity (deben venir de la instalación del juego) -->
     <Reference Include="UnityEngine">
       <HintPath>lib\UnityEngine.dll</HintPath>
       <Private>False</Private>

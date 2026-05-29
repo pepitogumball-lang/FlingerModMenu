@@ -1,15 +1,25 @@
-# Dependencias requeridas
+# Dependencias de lib/
 
-Antes de compilar, debes subir los siguientes archivos a esta carpeta `lib/`:
+## Ya incluidas (extraídas del release oficial v77)
 
-1. `Assembly-CSharp.dll`
-2. `ModdingAPI.dll`
-3. `UnityEngine.dll`
-4. `UnityEngine.CoreModule.dll`
-5. `UnityEngine.IMGUIModule.dll`
-6. `PlayMaker.dll`
+| Archivo | Descripción |
+|---|---|
+| `Assembly-CSharp.dll` | Juego parcheado — contiene namespace `Modding` |
+| `MMHOOK_Assembly-CSharp.dll` | Hooks MonoMod (equivalente moderno de ModdingAPI.dll) |
+| `MMHOOK_PlayMaker.dll` | Hooks de PlayMaker |
+| `MonoMod.RuntimeDetour.dll` | Dependencia de MonoMod |
+| `MonoMod.Utils.dll` | Dependencia de MonoMod |
+| `Mono.Cecil.dll` | Dependencia de MonoMod |
+| `Newtonsoft.Json.dll` | JSON serialization |
 
-Puedes encontrar estas DLLs en la instalación de Hollow Knight para Android:
-`Android/data/[tu_juego]/files/hollow_knight_Data/Managed/`
+## Faltan — debes subirlas desde tu instalación del juego
 
-> **IMPORTANTE:** Sin estos archivos el proyecto NO compilará.
+Cópialas desde:
+`hollow_knight_Data/Managed/` (PC Steam) o dentro de la APK Mono
+
+| Archivo | Origen |
+|---|---|
+| `UnityEngine.dll` | Carpeta `Managed/` del juego |
+| `UnityEngine.CoreModule.dll` | Carpeta `Managed/` del juego |
+| `UnityEngine.IMGUIModule.dll` | Carpeta `Managed/` del juego |
+| `PlayMaker.dll` | Carpeta `Managed/` del juego |
