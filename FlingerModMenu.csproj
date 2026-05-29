@@ -1,95 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build" ToolsVersion="14.0">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>FlingerModMenu</AssemblyName>
+    <TargetFramework>net472</TargetFramework>
     <RootNamespace>FlingerModMenu</RootNamespace>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AssemblyName>FlingerModMenu</AssemblyName>
     <LangVersion>7.3</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>bin\Release\</OutputPath>
+    <Nullable>disable</Nullable>
+    <OutputPath>bin/$(Configuration)/</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Optimize>true</Optimize>
-    <DebugType>none</DebugType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>bin\Debug\</OutputPath>
-    <Optimize>false</Optimize>
-    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="FlingerMod.cs" />
-    <Compile Include="MenuManager.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- Assembly-CSharp parcheado: contiene namespace Modding -->
     <Reference Include="Assembly-CSharp">
-      <HintPath>lib\Assembly-CSharp.dll</HintPath>
+      <HintPath>lib/Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
-    <!-- Hooks MonoMod: equivalente moderno de ModdingAPI.dll -->
     <Reference Include="MMHOOK_Assembly-CSharp">
-      <HintPath>lib\MMHOOK_Assembly-CSharp.dll</HintPath>
+      <HintPath>lib/MMHOOK_Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
     <Reference Include="MMHOOK_PlayMaker">
-      <HintPath>lib\MMHOOK_PlayMaker.dll</HintPath>
+      <HintPath>lib/MMHOOK_PlayMaker.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
     <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>lib\MonoMod.RuntimeDetour.dll</HintPath>
+      <HintPath>lib/MonoMod.RuntimeDetour.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
     <Reference Include="MonoMod.Utils">
-      <HintPath>lib\MonoMod.Utils.dll</HintPath>
+      <HintPath>lib/MonoMod.Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
     <Reference Include="Mono.Cecil">
-      <HintPath>lib\Mono.Cecil.dll</HintPath>
+      <HintPath>lib/Mono.Cecil.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
     <Reference Include="Newtonsoft.Json">
-      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+      <HintPath>lib/Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
-    <!-- DLLs de Unity -->
     <Reference Include="UnityEngine">
-      <HintPath>lib\UnityEngine.dll</HintPath>
+      <HintPath>lib/UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>lib\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>lib/UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>lib\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>lib/UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-
     <Reference Include="PlayMaker">
-      <HintPath>lib\PlayMaker.dll</HintPath>
+      <HintPath>lib/PlayMaker.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
-
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 
 </Project>

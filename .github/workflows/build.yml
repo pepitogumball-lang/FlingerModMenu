@@ -1,0 +1,37 @@
+name: Build FlingerModMenu
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Mono y dependencias netstandard
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mono-complete
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Compilar FlingerModMenu.dll
+        run: dotnet build FlingerModMenu.csproj /p:Configuration=Release
+
+      - name: Verificar DLL generado
+        run: ls -lh bin/Release/FlingerModMenu.dll
+
+      - name: Subir DLL como artefacto descargable
+        uses: actions/upload-artifact@v4
+        with:
+          name: FlingerModMenu
+          path: bin/Release/FlingerModMenu.dll
+          retention-days: 30
