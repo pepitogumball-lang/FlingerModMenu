@@ -1,0 +1,65 @@
+====================================================
+  INSTRUCCIONES DE INSTALACIÓN - FlingerModMenu
+  Para Hollow Knight en Android / Tablet
+====================================================
+
+REQUISITOS:
+  - ZArchiver (gratis en Google Play)
+  - Shizuku (gratis en Google Play) con permisos activados
+  - Hollow Knight instalado y ejecutado al menos una vez
+
+----------------------------------------------------
+PASO 1: COMPILAR EL MOD
+----------------------------------------------------
+1. Sube los archivos .dll de dependencias a la carpeta lib/
+   (Assembly-CSharp.dll, ModdingAPI.dll, UnityEngine.dll,
+    UnityEngine.CoreModule.dll, UnityEngine.IMGUIModule.dll,
+    PlayMaker.dll)
+
+2. Presiona "Run" en Replit.
+   Se ejecutará: msbuild FlingerModMenu.csproj /p:Configuration=Release
+
+3. El archivo compilado estará en:
+   bin/Release/FlingerModMenu.dll
+
+----------------------------------------------------
+PASO 2: TRANSFERIR EL ARCHIVO AL DISPOSITIVO
+----------------------------------------------------
+1. Descarga el archivo FlingerModMenu.dll a tu tablet/teléfono
+   (puedes usar el navegador de Replit o transferirlo por cable USB).
+
+----------------------------------------------------
+PASO 3: INSTALAR CON ZARCHIVER + SHIZUKU
+----------------------------------------------------
+1. Abre Shizuku y asegúrate de que esté activo (icono verde).
+
+2. Abre ZArchiver.
+
+3. Navega a la siguiente ruta (reemplaza [tu_juego] con el
+   package name real de Hollow Knight, ej: com.teamcherry.hollowknight):
+
+   Android/data/[tu_juego]/files/hollow_knight_Data/Managed/Mods/
+
+   Ruta de ejemplo completa:
+   /storage/emulated/0/Android/data/com.teamcherry.hollowknight/
+     files/hollow_knight_Data/Managed/Mods/
+
+4. Si la carpeta "Mods/" no existe, créala con ZArchiver.
+
+5. Copia FlingerModMenu.dll a esa carpeta.
+   ZArchiver usará los permisos de Shizuku para acceder
+   a la carpeta protegida de Android/data/.
+
+----------------------------------------------------
+PASO 4: VERIFICAR
+----------------------------------------------------
+1. Inicia Hollow Knight en tu tablet.
+2. Debería aparecer un botón gris con el texto "smiler"
+   en la pantalla. Tócalo para abrir el Mod Menu.
+3. Si no aparece, verifica que el Modding API esté instalado
+   correctamente en la carpeta Managed/.
+
+====================================================
+  SOPORTE: Revisa los logs del juego en:
+  Android/data/[tu_juego]/files/hollow_knight_Data/output_log.txt
+====================================================

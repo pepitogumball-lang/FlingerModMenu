@@ -4,3 +4,26 @@ stack = "BEST_EFFORT_FALLBACK"
 
 [nix]
 channel = "stable-25_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Build FlingerModMenu"
+
+[[workflows.workflow]]
+name = "Build FlingerModMenu"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "xbuild FlingerModMenu.csproj /p:Configuration=Release"
+
+[workflows.workflow.metadata]
+outputType = "console"
