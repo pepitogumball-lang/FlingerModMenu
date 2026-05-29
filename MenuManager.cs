@@ -6,24 +6,17 @@ namespace FlingerModMenu
 {
     public class MenuManager : MonoBehaviour
     {
-        // --- Estado del menú ---
         private bool menuOpen = false;
 
-        // --- Posición del botón flotante ---
         private Rect floatingBtnRect = new Rect(20f, 100f, 110f, 50f);
-
-        // --- Posición y tamaño del menú principal ---
         private Rect menuRect = new Rect(20f, 40f, 380f, 520f);
 
-        // --- Toggles ---
         private bool godModeEnabled = false;
         private bool infiniteJumpEnabled = false;
         private bool oneShotEnabled = false;
 
-        // --- Give Geo ---
         private string geoAmountText = "1000";
 
-        // --- Estilos ---
         private GUIStyle floatingBtnStyle;
         private GUIStyle menuWindowStyle;
         private GUIStyle titleStyle;
@@ -46,39 +39,24 @@ namespace FlingerModMenu
             ModHooks.TakeDamageHook -= OnTakeDamage;
         }
 
-        // --- God Mode Hook ---
         private int OnTakeHealth(int damage)
         {
             if (godModeEnabled) return 0;
             return damage;
         }
 
-        // --- One Hit Kill Hook ---
-        private HitInstance OnTakeDamage(ref HitInstance hit)
+        private int OnTakeDamage(ref int hazardType, int damage)
         {
-            if (oneShotEnabled)
-                hit.DamageDealt = 9999;
-            return hit;
+            if (oneShotEnabled) return 9999;
+            return damage;
         }
 
         void Update()
         {
-            if (infiniteJumpEnabled)
+            if (infiniteJumpEnabled && HeroController.instance != null)
             {
-                bool jumpPressed = Input.GetButtonDown("Jump");
-                bool touchJump = Input.touchCount > 0;
-
-                if ((jumpPressed || touchJump) && HeroController.instance != null)
-                {
-                    Rigidbody2D rb = HeroController.instance.GetComponent<Rigidbody2D>();
-                    if (rb != null)
-                    {
-                        Vector2 vel = rb.velocity;
-                        vel.y = 0f;
-                        rb.velocity = vel;
-                    }
-                    HeroController.instance.Jump();
-                }
+                PlayerData.instance.hasDoubleJump = true;
+                PlayerData.instance.infiniteAirJump = true;
             }
         }
 
@@ -87,7 +65,6 @@ namespace FlingerModMenu
             if (stylesInitialized) return;
             stylesInitialized = true;
 
-            // Botón flotante
             floatingBtnStyle = new GUIStyle(GUI.skin.button);
             floatingBtnStyle.fontSize = 20;
             floatingBtnStyle.alignment = TextAnchor.MiddleCenter;
@@ -96,24 +73,20 @@ namespace FlingerModMenu
             floatingBtnStyle.hover.background = MakeTex(2, 2, new Color(0.45f, 0.45f, 0.45f, 1f));
             floatingBtnStyle.border = new RectOffset(12, 12, 12, 12);
 
-            // Fondo menú principal
             menuWindowStyle = new GUIStyle(GUI.skin.box);
             menuWindowStyle.normal.background = MakeTex(2, 2, new Color(0.08f, 0.08f, 0.08f, 0.92f));
 
-            // Título
             titleStyle = new GUIStyle(GUI.skin.label);
             titleStyle.fontSize = 26;
             titleStyle.fontStyle = FontStyle.Bold;
             titleStyle.alignment = TextAnchor.MiddleCenter;
             titleStyle.normal.textColor = new Color(0.9f, 0.7f, 0.1f);
 
-            // Toggles
             toggleStyle = new GUIStyle(GUI.skin.toggle);
             toggleStyle.fontSize = 22;
             toggleStyle.normal.textColor = Color.white;
             toggleStyle.active.textColor = Color.white;
 
-            // Botones
             buttonStyle = new GUIStyle(GUI.skin.button);
             buttonStyle.fontSize = 22;
             buttonStyle.fontStyle = FontStyle.Bold;
@@ -121,7 +94,6 @@ namespace FlingerModMenu
             buttonStyle.hover.background = MakeTex(2, 2, new Color(0.3f, 0.3f, 0.6f, 1f));
             buttonStyle.normal.textColor = Color.white;
 
-            // Botón cerrar (rojo)
             closeBtnStyle = new GUIStyle(GUI.skin.button);
             closeBtnStyle.fontSize = 22;
             closeBtnStyle.fontStyle = FontStyle.Bold;
@@ -129,7 +101,6 @@ namespace FlingerModMenu
             closeBtnStyle.hover.background = MakeTex(2, 2, new Color(0.9f, 0.2f, 0.2f, 1f));
             closeBtnStyle.normal.textColor = Color.white;
 
-            // TextField
             textFieldStyle = new GUIStyle(GUI.skin.textField);
             textFieldStyle.fontSize = 22;
             textFieldStyle.alignment = TextAnchor.MiddleCenter;
@@ -141,12 +112,10 @@ namespace FlingerModMenu
 
             if (!menuOpen)
             {
-                // Botón flotante arrastrable
                 floatingBtnRect = GUI.Window(1001, floatingBtnRect, DrawFloatingButton, "", new GUIStyle());
             }
             else
             {
-                // Menú principal
                 menuRect = GUI.Window(1002, menuRect, DrawMainMenu, "", new GUIStyle());
             }
         }
@@ -168,36 +137,29 @@ namespace FlingerModMenu
             float y = pad;
             float w = menuRect.width - pad * 2;
 
-            // Título
             GUI.Label(new Rect(pad, y, w - 50, 40), "Flinger's Mod Menu", titleStyle);
 
-            // Botón cerrar (X rojo)
             if (GUI.Button(new Rect(menuRect.width - 50, y, 40, 40), "X", closeBtnStyle))
             {
                 menuOpen = false;
             }
             y += 50f;
 
-            // --- God Mode ---
             godModeEnabled = GUI.Toggle(new Rect(pad, y, w, 40), godModeEnabled, "  God Mode", toggleStyle);
             y += 48f;
 
-            // --- Infinite Jump ---
             infiniteJumpEnabled = GUI.Toggle(new Rect(pad, y, w, 40), infiniteJumpEnabled, "  Infinite Jump", toggleStyle);
             y += 48f;
 
-            // --- One Hit Kill ---
             oneShotEnabled = GUI.Toggle(new Rect(pad, y, w, 40), oneShotEnabled, "  One Hit Kill", toggleStyle);
             y += 48f;
 
-            // --- Desbloquear Movimientos ---
             if (GUI.Button(new Rect(pad, y, w, 44), "Desbloquear Movimientos", buttonStyle))
             {
                 UnlockMovements();
             }
             y += 52f;
 
-            // --- Amuletos Infinitos ---
             if (GUI.Button(new Rect(pad, y, w, 44), "Amuletos Infinitos (99 slots)", buttonStyle))
             {
                 if (PlayerData.instance != null)
@@ -205,7 +167,6 @@ namespace FlingerModMenu
             }
             y += 52f;
 
-            // --- Give Geo ---
             GUI.Label(new Rect(pad, y, w, 30), "Cantidad de Geo:", toggleStyle);
             y += 32f;
             geoAmountText = GUI.TextField(new Rect(pad, y, w - 160, 44), geoAmountText, textFieldStyle);
@@ -227,7 +188,7 @@ namespace FlingerModMenu
             pd.hasDoubleJump = true;
             pd.hasSuperDash = true;
             pd.hasAcidArmour = true;
-            pd.hasTear = true;
+            pd.hasShadowDash = true;
             pd.hasDreamNail = true;
         }
 

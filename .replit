@@ -1,4 +1,4 @@
-modules = ["python-3.11", "dotnet-8.0"]
+modules = ["dotnet-7.0", "python-3.11", "nix"]
 [agent]
 expertMode = true
 stack = "BEST_EFFORT_FALLBACK"
@@ -26,20 +26,20 @@ args = "Auto-push to GitHub"
 name = "Build FlingerModMenu"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "xbuild FlingerModMenu.csproj /p:Configuration=Release"
-
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "dotnet build FlingerModMenu.csproj -c Release"
 
 [[workflows.workflow]]
 name = "Auto-push to GitHub"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "console"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python3 watcher.py"
-
-[workflows.workflow.metadata]
-outputType = "console"
