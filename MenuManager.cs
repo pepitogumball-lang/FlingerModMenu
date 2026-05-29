@@ -53,10 +53,23 @@ namespace FlingerModMenu
 
         void Update()
         {
-            if (infiniteJumpEnabled && HeroController.instance != null)
+            if (infiniteJumpEnabled)
             {
-                PlayerData.instance.hasDoubleJump = true;
-                PlayerData.instance.infiniteAirJump = true;
+                bool jumpPressed = Input.GetButtonDown("Jump");
+                bool touchJump = Input.touchCount > 0;
+
+                if ((jumpPressed || touchJump) && HeroController.instance != null)
+                {
+                    Rigidbody2D rb = HeroController.instance.GetComponent<Rigidbody2D>();
+                    if (rb != null)
+                    {
+                        Vector2 vel = rb.velocity;
+                        vel.y = 0f;
+                        rb.velocity = vel;
+                    }
+                    PlayerData.instance.hasDoubleJump = true;
+                    PlayerData.instance.infiniteAirJump = true;
+                }
             }
         }
 
